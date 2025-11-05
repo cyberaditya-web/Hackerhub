@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HackerHub.AR — Kali Linux</title>
+  <style>
+  :root{
+    --bg:#030409;
+    --panel:#071018;
+    --accent:#00ff9c;
+    --muted:#7edfb0;
+    --danger:#ff3b3b;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family: 'Courier New', monospace;background:
+    radial-gradient(circle at 10% 10%, rgba(0,255,140,0.03), transparent 8%),
+    linear-gradient(180deg,#000 0%, #02111b 100%);color:var(--accent);-webkit-font-smoothing:antialiased}
+  .wrap{min-height:100vh;display:flex;flex-direction:column}
+  .header{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid rgba(0,255,140,0.04);background:linear-gradient(90deg, rgba(0,0,0,0.25), transparent)}
+  .header.small{padding:10px}
+  .brand .title{margin:0;font-size:20px;letter-spacing:2px}
+  .brand .subtitle{font-size:12px;color:var(--muted);opacity:.9;margin-top:4px}
+  .nav a{color:var(--muted);text-decoration:none;margin-left:12px;font-size:14px}
+  .hero{display:flex;gap:18px;align-items:stretch;padding:26px;max-width:1100px;margin:18px auto;width:92%}
+  .hero-left{flex:1}
+  .hero-right{width:360px;max-width:40%}
+  .lead{color:#9fffd3;opacity:.9}
+  .cta{margin-top:12px}
+  .btn{display:inline-block;padding:10px 14px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#7effc6);color:#001;text-decoration:none;font-weight:700;margin-right:8px}
+  .btn.alt{background:transparent;border:1px solid rgba(0,255,140,0.06);color:var(--muted)}
+  .contact-box{margin-top:14px;padding:10px;background:rgba(255,255,255,0.02);border-radius:8px;border:1px solid rgba(0,255,140,0.03)}
+  .features{display:flex;gap:12px;max-width:1100px;margin:0 auto;padding:12px}
+  .fcard{flex:1;background:rgba(255,255,255,0.02);padding:14px;border-radius:8px;border:1px solid rgba(0,255,140,0.03)}
+  .matrix{background:#01060a;border-radius:8px;padding:12px;height:280px;overflow:hidden;font-family:monospace;font-size:12px;line-height:14px;color:var(--accent);white-space:pre}
+  .page{max-width:1100px;margin:18px auto;padding:12px}
+  .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .course{background:var(--panel);padding:12px;border-radius:8px;border:1px solid rgba(0,255,140,0.03)}
+  .smallbtn{display:inline-block;margin-top:10px;padding:8px 10px;border-radius:6px;background:rgba(0,255,140,0.06);color:var(--muted);text-decoration:none}
+  .contact-page .note{margin-top:12px;padding:10px;border-left:4px solid rgba(255,255,255,0.03);color:var(--muted)}
+  .glitch{position:relative;display:inline-block}
+  .glitch::after{content:attr(data-text);position:absolute;left:2px;top:2px;color:var(--accent);opacity:.12;mix-blend-mode:screen;filter:blur(.6px)}
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 rgba(0,255,140,0.06); }
+    50% { box-shadow: 0 0 20px rgba(0,255,140,0.06); }
+    100% { box-shadow: 0 0 0 rgba(0,255,140,0.06); }
+  }
+  .brand .title { animation: pulse 3s infinite; }
+  /* gallery */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;padding:12px;max-width:1100px;margin:0 auto}
+  .grid figure{margin:0;background:var(--panel);border-radius:8px;padding:8px;border:1px solid rgba(0,255,140,0.03);text-align:center}
+  .grid img{width:100%;height:140px;object-fit:cover;border-radius:6px;cursor:pointer;transition:transform .25s}
+  .grid img:hover{transform:scale(1.03)}
+  .grid figcaption{padding-top:8px;color:var(--muted);font-size:13px}
+  /* lightbox */
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:9999}
+  .lightbox-inner{position:relative}
+  .lightbox-inner img{max-width:90vw;max-height:80vh;border-radius:6px}
+  .lightbox-inner .close{position:absolute;top:-12px;right:-12px;background:#111;border-radius:50%;border:1px solid rgba(255,255,255,0.05);padding:6px;color:var(--accent);cursor:pointer}
+  /* nav sticky */
+  .topnav{position:sticky;top:0;z-index:50;background:linear-gradient(90deg, rgba(0,0,0,0.45), rgba(0,0,0,0.15));backdrop-filter: blur(4px)}
+  .container{max-width:1200px;margin:0 auto;padding:0 14px}
+  footer{margin-top:auto;padding:16px;text-align:center;opacity:.7;color:var(--muted);font-size:13px}
+  /* scary scanline */
+  .scanline{position:fixed;inset:0;pointer-events:none;mix-blend-mode:overlay;background-image:linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px);background-size:100% 3px;opacity:0.6}
+  /* responsive */
+  @media(max-width:900px){
+    .hero{flex-direction:column}
+    .hero-right{width:100%;max-width:100%}
+    .nav{display:none}
+  }
+  </style>
+</head>
+<body>
+  <div class="scanline" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <!-- NAV -->
+    <div class="topnav">
+      <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding:10px 0">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="brand">
+            <div class="title glitch" data-text="HackerHub.AR" style="font-weight:700;color:var(--accent)">HackerHub.AR</div>
+            <div class="subtitle">Kali Linux</div>
+          </div>
+        </div>
+        <nav class="nav" aria-label="main navigation">
+          <a href="#home">Home</a>
+          <a href="#courses">কোর্স</a>
+          <a href="#kali">Kali Linux</a>
+          <a href="#darkweb">Dark Web</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- HOME -->
+    <main id="home" class="container" style="padding-top:28px;padding-bottom:28px">
+      <section class="hero">
+        <div class="hero-left">
+          <h2 style="margin:0 0 8px 0;font-size:22px">Hacking — এডুকেশনাল • সতর্কতা সহ</h2>
+          <p class="lead">এই সাইটে আমরা হ্যাকিং সম্পর্কিত কৌশল ও নিরাপত্তা‑সচেতনতা শেয়ার করব — সবকিছুই এথিক্যাল ও আইনগত দিকটি মাথায় রেখে।</p>
+          <div class="cta">
+            <a class="btn" href="#courses">কোর্স দেখো</a>
+            <a class="btn alt" href="#gallery">গ্যালারি</a>
+          </div>
+
+          <div class="contact-box" style="margin-top:16px;">
+            <p style="margin:0">যোগাযোগ: <a href="mailto:rohomankaje@gmail" style="color:var(--accent);text-decoration:underline">rohomankaje@gmail</a></p>
+            <p style="margin:6px 0 0 0">কল/ওয়াটসঅ্যাপ: <a href="tel:+8801602230900" style="color:var(--accent);text-decoration:underline">01602230900</a></p>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div id="matrix" class="matrix" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="features" style="margin-top:18px">
+        <article class="fcard">
+          <h3 style="margin-top:0">কোর্স & ভিডিও</h3>
+          <p>প্রাথমিক থেকে মধ্যম পর্যায়ের এথিক্যাল হ্যাকিং বিষয়ক কোর্স (ভিডিও + টিউটোরিয়াল)।</p>
+        </article>
+        <article class="fcard">
+          <h3 style="margin-top:0">Kali Linux</h3>
+          <p>ক্যালি ইনস্টলেশন, টুলস‑এর পরিচিতি ও নিরাপত্তা‑টিপস (শিক্ষামূলক)।</p>
+        </article>
+        <article class="fcard">
+          <h3 style="margin-top:0">Dark Web আলোচনাঃ সচেতনতা</h3>
+          <p>ডার্ক‑ওয়েব সম্পর্কে সচেতনতা ও ঝুঁকি; কিভাবে নিজেকে সুরক্ষিত রাখবেন।</p>
+        </article>
+      </section>
+    </main>
+
+    <!-- COURSES -->
+    <section id="courses" class="page" style="background:transparent;padding-top:10px;padding-bottom:10px;border-top:1px dashed rgba(0,255,140,0.03)">
+      <div class="container">
+        <h2>কোর্স লিস্ট</h2>
+        <p class="note">প্রতিটি কোর্সে এথিক্যাল ও আইনগত নির্দেশ থাকবে — কেবল বৈধ উদ্দেশ্যে ব্যবহার করো।</p>
+        <div class="course-grid" style="margin-top:12px">
+          <div class="course">
+            <h3>প্রারম্ভিক: নেটওয়ার্ক‑ফান্ডামেন্টাল</h3>
+            <p>TCP/IP, Ports, Basics — বোঝা এবং সিস্টেম সিকিউরিটি।</p>
+            <a class="smallbtn" href="#">ভিডিও দেখো</a>
+          </div>
+          <div class="course">
+            <h3>মধ্যম: Kali Tools পরিচিতি</h3>
+            <p>Kali‑এর টুলস‑এর পরিচিতি ও পরিবেশ (অনুমতি ভিত্তিক ব্যবহার)।</p>
+            <a class="smallbtn" href="#">ভিডিও দেখো</a>
+          </div>
+          <div class="course">
+            <h3>সিকিউরিটি বেস্ট প্র্যাকটিস</h3>
+            <p>পাসওয়ার্ড হ্যান্ডলিং, 2FA, সিস্টেম হার্ডেনিং টিপস।</p>
+            <a class="smallbtn" href="#">আরো জানো</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KALI -->
+    <section id="kali" class="page" style="border-top:1px dashed rgba(0,255,140,0.03)">
+      <div class="container">
+        <h2>Kali Linux — পরিচিতি</h2>
+        <p>Kali Linux হচ্ছে সিকিউরিটি অডিট ও পেন‑টেস্টিং‑এ ব্যবহৃত লিনাক্স ডিস্ট্রো। এখানে কেবল সাধারণ পরিচিতি, ডকুমেন্টেশন‑লিংক ও নিরাপত্তা‑টিপস শেয়ার করা হবে — কোনো অবৈধ টিউটোরিয়াল নয়।</p>
+        <section style="margin-top:12px">
+          <h3>কীভাবে শুরু করো</h3>
+          <ol>
+            <li>লিনাক্স বেসিক শিখো (ফাইল সিস্টেম, কমান্ড)</li>
+            <li>ইথিক্যাল হ্যাকিং নীতিমালা বোঝো</li>
+            <li>অ্যাপ্রোপ্রিয়েট টুলস‑এর ডকুমেন্টেশন পড়ো</li>
+          </ol>
+        </section>
+      </div>
+    </section>
+
+    <!-- DARK WEB -->
+    <section id="darkweb" class="page" style="border-top:1px dashed rgba(0,255,140,0.03)">
+      <div class="container">
+        <h2>Dark Web — সচেতনতা ও ঝুঁকি</h2>
+        <p>ডার্ক‑ওয়েব সম্পর্কে সাধারণ তথ্য, ঝুঁকি ও নিরাপত্তা কৌশল — এখানে আমরা কেবল সচেতনতা প্রদান করব এবং অবৈধ কাজকে উৎসাহিত করব না।</p>
+        <ul>
+          <li>ডার্ক‑ওয়েব কি — সংক্ষেপে</li>
+          <li>জরুরি সতর্কতা: ব্যক্তিগত তথ্য কাউকে শেয়ার করোনা</li>
+          <li>নিরাপত্তা টিপস: VPN, আপডেটেড সফটওয়্যার, আইনগত পরামর্শ নেওয়া</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="page" style="border-top:1px dashed rgba(0,255,140,0.03)">
+      <div class="container">
+        <h2>Gallery — Sample Uploads</h2>
+        <p style="margin-top:0">নিচের ছবিগুলো স্ট্যাটিক নমুনা — ব্যবহার উপযোগী ছবি না থাকলে প্লেসহোল্ডার ব্যবহার করা হয়েছে।</p>
+        <div class="grid" id="grid">
+          <!-- Using Picsum placeholders so no local images needed -->
+          <figure><img src="https://picsum.photos/seed/1/600/400" alt="s1"><figcaption>Sample 1</figcaption></figure>
+          <figure><img src="https://picsum.photos/seed/2/600/400" alt="s2"><figcaption>Sample 2</figcaption></figure>
+          <figure><img src="https://picsum.photos/seed/3/600/400" alt="s3"><figcaption>Sample 3</figcaption></figure>
+          <figure><img src="https://picsum.photos/seed/4/600/400" alt="s4"><figcaption>Sample 4</figcaption></figure>
+          <figure><img src="https://picsum.photos/seed/5/600/400" alt="s5"><figcaption>Sample 5</figcaption></figure>
+          <figure><img src="https://picsum.photos/seed/6/600/400" alt="s6"><figcaption>Sample 6</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="page" style="border-top:1px dashed rgba(0,255,140,0.03);padding-bottom:60px">
+      <div class="container">
+        <h2>যোগাযোগ</h2>
+        <p>ইমেইল: <a href="mailto:rohomankaje@gmail" style="color:var(--accent);text-decoration:underline">rohomankaje@gmail</a></p>
+        <p>ফোন: <a href="tel:+8801602230900" style="color:var(--accent);text-decoration:underline">01602230900</a></p>
+        <div class="note" style="margin-top:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:6px">
+          <strong>দ্রষ্টব্য:</strong> এই সাইটে কেবল শিক্ষা ও সচেতনতা‑ভিত্তিক কনটেন্ট থাকবে। অবৈধ কাজে প্ররোচনা বা সাহায্য দেওয়া হবে না।
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>© 2025 HackerHub.AR — শুধুমাত্র শিক্ষা ও সচেতনতা উদ্দেশ্যে।</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Lightbox container (dynamically created) -->
+  <div id="lightbox-root"></div>
+
+  <script>
+  // Matrix animation
+  (function(){
+    const el = document.getElementById('matrix');
+    if(!el) return;
+    const cols = 60;
+    const rows = 18;
+    const chars = '01<>/#%&*ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    function randChar(){ return chars.charAt(Math.floor(Math.random()*chars.length)); }
+    function frame(){
+      let out = '';
+      for(let r=0;r<rows;r++){
+        for(let c=0;c<cols;c++){
+          out += Math.random() > 0.66 ? randChar() : ' ';
+        }
+        out += '\n';
+      }
+      el.textContent = out;
+    }
+    frame();
+    setInterval(frame, 110);
+  })();
+
+  // Lightbox for gallery images
+  (function(){
+    function createLightbox(src){
+      const modal = document.createElement('div');
+      modal.className = 'lightbox';
+      modal.innerHTML = '<div class="lightbox-inner"><img src="'+src+'"><button class="close">✕</button></div>';
+      document.body.appendChild(modal);
+      modal.querySelector('.close').onclick = ()=> modal.remove();
+      modal.onclick = (e)=> { if(e.target === modal) modal.remove(); };
+    }
+    document.querySelectorAll('.grid img').forEach(img=>{
+      img.addEventListener('click', ()=> createLightbox(img.src));
+    });
+  })();
+
+  // Smooth scroll for anchor links
+  (function(){
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth',block:'start'}); }
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
